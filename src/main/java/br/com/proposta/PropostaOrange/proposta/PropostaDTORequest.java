@@ -1,6 +1,9 @@
 package br.com.proposta.PropostaOrange.proposta;
 
+import br.com.proposta.PropostaOrange.validacoes.DocumentoCPFouCNPJ;
 import br.com.proposta.PropostaOrange.validacoes.ValidarDocumento;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
@@ -8,6 +11,7 @@ import java.math.BigDecimal;
 public class PropostaDTORequest {
 
     //@ValidarDocumento(domainClass = Proposta.class, fieldName = "documento")
+    @DocumentoCPFouCNPJ
     private String documento;
 
     @Email @NotNull @NotEmpty

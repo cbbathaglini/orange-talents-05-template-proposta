@@ -1,6 +1,7 @@
 package br.com.proposta.PropostaOrange.proposta;
 
 
+import br.com.proposta.PropostaOrange.validateErrors.ErroAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,12 @@ public class PropostaController {
     @CacheEvict(value = "listaDePropostas", allEntries = true)
     public ResponseEntity cadastrar(@RequestBody @Valid PropostaDTORequest propostaDTORequest,  UriComponentsBuilder uriBuilder){
 
+        if(propostaRepository.findPropostaDocumento(propostaDTORequest.getDocumento()) > 0){
+            return ResponseEntity.status(422).body(new ErroAPI("Proposta", "O solicitante já requisitou uma proposta"));
+        }
+
         Proposta proposta = propostaDTORequest.converter();
         propostaRepository.save(proposta);
-
 
 
         URI uri = uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();

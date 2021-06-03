@@ -49,13 +49,28 @@ class PropostaTest {
                 .andExpect(status().isCreated());
 
         Optional<Proposta> propostaOptional = propostaRepository.findByDocumento("41.173.861/0001-80");
-        Long ultimo = propostaRepository.getLastId();
-        System.out.println("ultimoid: " + ultimo);
+
+
         Assertions.assertAll(
-                () -> Assertions.assertEquals(propostaOptional.get().getId(), ultimo),
+                () -> Assertions.assertEquals(propostaOptional.get().getId(), propostaRepository.getLastId()),
                 () -> Assertions.assertEquals(propostaOptional.get().getNome(), "Carine Bertagnolli Bathaglini"),
                 () -> Assertions.assertEquals(propostaOptional.get().getEmail(), "cbbathaglini@gmail.com")
         );
+
+    }
+
+
+    @Test
+    @Rollback
+    @Transactional
+    void deveRetornarExcecaoJaTemProposta() throws Exception {
+
+        String json = CriacaoJson(new PropostaDTORequest("65.834.187/0001-74", "email@gmail.com", "teste nome", "endereceo pessoa z", new BigDecimal("4900.0")));
+
+        mockMvc.perform(post("/propostas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(  status().is4xxClientError());
 
     }
 
