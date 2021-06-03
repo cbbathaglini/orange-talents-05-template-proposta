@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 public class PropostaDTORequest {
 
-    //@ValidarDocumento(domainClass = Proposta.class, fieldName = "documento")
+
     @DocumentoCPFouCNPJ
     private String documento;
 
