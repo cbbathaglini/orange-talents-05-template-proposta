@@ -25,8 +25,11 @@ public class PropostaController {
     @Transactional
     @CacheEvict(value = "listaDePropostas", allEntries = true)
     public ResponseEntity cadastrar(@RequestBody @Valid PropostaDTORequest propostaDTORequest,  UriComponentsBuilder uriBuilder){
+
         Proposta proposta = propostaDTORequest.converter();
         propostaRepository.save(proposta);
+
+
 
         URI uri = uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
         return ResponseEntity.created(uri).body(new PropostaDTOResponse(proposta));

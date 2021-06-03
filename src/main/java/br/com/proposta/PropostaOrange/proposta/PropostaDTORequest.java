@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 public class PropostaDTORequest {
 
-    @ValidarDocumento(domainClass = Proposta.class, fieldName = "documento")
+    //@ValidarDocumento(domainClass = Proposta.class, fieldName = "documento")
     private String documento;
 
     @Email @NotNull @NotEmpty

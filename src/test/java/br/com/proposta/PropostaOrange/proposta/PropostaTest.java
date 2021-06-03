@@ -41,17 +41,18 @@ class PropostaTest {
     void deveRetornarProposta() throws Exception {
 
 
-        String json = CriacaoJson(new PropostaDTORequest("862.517.910-04", "cbbathaglini@gmail.com", "Carine Bertagnolli Bathaglini", "avenida coronel marcos", new BigDecimal("4500.0")));
+        String json = CriacaoJson(new PropostaDTORequest("41.173.861/0001-80", "cbbathaglini@gmail.com", "Carine Bertagnolli Bathaglini", "avenida coronel marcos", new BigDecimal("4500.0")));
 
         mockMvc.perform(post("/propostas")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isCreated());
 
-        Optional<Proposta> propostaOptional = propostaRepository.findByDocumento("862.517.910-04");
-
-
+        Optional<Proposta> propostaOptional = propostaRepository.findByDocumento("41.173.861/0001-80");
+        Long ultimo = propostaRepository.getLastId();
+        System.out.println("ultimoid: " + ultimo);
         Assertions.assertAll(
+                () -> Assertions.assertEquals(propostaOptional.get().getId(), ultimo),
                 () -> Assertions.assertEquals(propostaOptional.get().getNome(), "Carine Bertagnolli Bathaglini"),
                 () -> Assertions.assertEquals(propostaOptional.get().getEmail(), "cbbathaglini@gmail.com")
         );
