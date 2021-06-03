@@ -22,6 +22,14 @@ public class PropostaDTORequest {
     @NotNull @PositiveOrZero
     private BigDecimal salario;
 
+    public PropostaDTORequest(String documento, String email, String nome, String endereco, BigDecimal salario) {
+        this.documento = documento;
+        this.email = email;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.salario = salario;
+    }
+
     public Proposta converter() {
         return new Proposta(this.documento, this.email, this.nome, this.endereco, this.salario);
     }
