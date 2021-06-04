@@ -1,6 +1,6 @@
 package br.com.proposta.PropostaOrange.validateErrors;
 
-import br.com.proposta.PropostaOrange.feignError.FeignErrorDecoder;
+
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
