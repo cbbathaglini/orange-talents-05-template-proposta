@@ -5,18 +5,20 @@ import br.com.proposta.PropostaOrange.proposta.StatusResultado;
 
 public class ConsultaDadosDTORequest {
 
-    private Long id;
+    private Long idProposta;
     private String documento;
     private String nome;
 
     public ConsultaDadosDTORequest(Proposta proposta) {
-        this.id = proposta.getId();
+        this.idProposta = proposta.getId();
         this.documento = proposta.getDocumento();
         this.nome = proposta.getNome();
     }
 
-    public Long getId() {
-        return id;
+
+
+    public Long getIdProposta() {
+        return idProposta;
     }
 
     public String getDocumento() {

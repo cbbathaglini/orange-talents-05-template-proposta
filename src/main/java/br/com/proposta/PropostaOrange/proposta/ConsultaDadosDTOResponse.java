@@ -1,21 +1,20 @@
 package br.com.proposta.PropostaOrange.proposta;
 
 public class ConsultaDadosDTOResponse {
-    private Long id;
+    private Long idProposta;
     private String documento;
     private String nome;
-    private StatusResultado statusResultado;
+    private StatusResultado resultadoSolicitacao;
 
-    public ConsultaDadosDTOResponse(Long id, String documento, String nome, StatusResultado statusResultado) {
-        this.id = id;
+    public ConsultaDadosDTOResponse(Long idProposta, String documento, String nome, StatusResultado resultadoSolicitacao) {
+        this.idProposta = idProposta;
         this.documento = documento;
         this.nome = nome;
-        this.statusResultado = statusResultado;
+        this.resultadoSolicitacao = resultadoSolicitacao;
     }
 
-
-    public Long getId() {
-        return id;
+    public Long getIdProposta() {
+        return idProposta;
     }
 
     public String getDocumento() {
@@ -27,16 +26,7 @@ public class ConsultaDadosDTOResponse {
     }
 
     public StatusResultado getStatusResultado() {
-        return statusResultado;
+        return resultadoSolicitacao;
     }
 
-    @Override
-    public String toString() {
-        return "ResultadoDados{" +
-                "id=" + id +
-                ", documento='" + documento + '\'' +
-                ", nome='" + nome + '\'' +
-                ", statusResultado=" + statusResultado +
-                '}';
-    }
 }

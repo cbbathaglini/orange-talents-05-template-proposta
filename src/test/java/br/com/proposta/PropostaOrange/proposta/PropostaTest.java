@@ -41,22 +41,22 @@ class PropostaTest {
     void deveRetornarProposta() throws Exception {
 
 
-        String json = CriacaoJson(new PropostaDTORequest("41.173.861/0001-80", "cbbathaglini@gmail.com", "Carine Bertagnolli Bathaglini", "avenida coronel marcos", new BigDecimal("4500.0")));
+        String json = CriacaoJson(new PropostaDTORequest("26.621.139/0001-46", "cbbathaglini@gmail.com", "Carine Bertagnolli Bathaglini", "avenida coronel marcos", new BigDecimal("4500.0")));
 
         mockMvc.perform(post("/propostas")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isCreated());
 
-        Optional<Proposta> propostaOptional = propostaRepository.findByDocumento("41.173.861/0001-80");
-
-
+        int total = propostaRepository.findPropostaDocumento("26.621.139/0001-46");
+        Optional<Proposta> propostaOptional = propostaRepository.findByDocumento("26.621.139/0001-46");
+        //System.out.println(propostaOptional.get().toString());
         Assertions.assertAll(
                 () -> Assertions.assertEquals(propostaOptional.get().getId(), propostaRepository.getLastId()),
                 () -> Assertions.assertEquals(propostaOptional.get().getNome(), "Carine Bertagnolli Bathaglini"),
-                () -> Assertions.assertEquals(propostaOptional.get().getEmail(), "cbbathaglini@gmail.com")
+                () -> Assertions.assertEquals(propostaOptional.get().getEmail(), "cbbathaglini@gmail.com"),
+                () -> Assertions.assertEquals(propostaOptional.get().getStatusProposta(), StatusProposta.ELEGIVEL)
         );
-
     }
 
 
@@ -64,14 +64,11 @@ class PropostaTest {
     @Rollback
     @Transactional
     void deveRetornarExcecaoJaTemProposta() throws Exception {
-
         String json = CriacaoJson(new PropostaDTORequest("65.834.187/0001-74", "email@gmail.com", "teste nome", "endereceo pessoa z", new BigDecimal("4900.0")));
-
         mockMvc.perform(post("/propostas")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(  status().is4xxClientError());
-
     }
 
     /*
