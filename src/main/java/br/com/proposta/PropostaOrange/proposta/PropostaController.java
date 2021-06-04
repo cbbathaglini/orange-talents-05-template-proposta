@@ -22,6 +22,9 @@ public class PropostaController {
     @Autowired
     private PropostaRepository propostaRepository;
 
+    @Autowired
+    private ConsultaDadosFinanceiros consultaDadosInterface;
+
     @PostMapping
     @Transactional
     @CacheEvict(value = "listaDePropostas", allEntries = true)
@@ -34,6 +37,8 @@ public class PropostaController {
         Proposta proposta = propostaDTORequest.converter();
         propostaRepository.save(proposta);
 
+        ConsultaDadosDTOResponse consultaDadosDTOResponse = consultaDadosInterface.consultarDados(new ConsultaDadosDTORequest(proposta));
+        proposta.setStatusProposta(consultaDadosDTOResponse.getStatusResultado());
 
         URI uri = uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
         return ResponseEntity.created(uri).body(new PropostaDTOResponse(proposta));

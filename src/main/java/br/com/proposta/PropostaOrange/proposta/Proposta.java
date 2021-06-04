@@ -1,10 +1,7 @@
 package br.com.proposta.PropostaOrange.proposta;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -19,6 +16,8 @@ public class Proposta {
     private String nome;
     private String endereco;
     private BigDecimal salario;
+    @Enumerated(EnumType.STRING)
+    private StatusProposta statusProposta;
 
     public Proposta() {
     }
@@ -29,6 +28,18 @@ public class Proposta {
         this.nome = nome;
         this.endereco = endereco;
         this.salario = salario;
+    }
+
+    public void setStatusProposta(StatusResultado statusResultado){
+        this.statusProposta = statusResultado.retornaStatus();
+    }
+
+    public StatusProposta getStatusProposta() {
+        return statusProposta;
+    }
+
+    public void setStatusProposta(StatusProposta statusProposta) {
+        this.statusProposta = statusProposta;
     }
 
     public Long getId() {
@@ -42,4 +53,10 @@ public class Proposta {
     public String getNome() {
         return nome;
     }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+
 }
