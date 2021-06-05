@@ -12,6 +12,10 @@ public class AvisoDTOResponse {
         this.destino = destino;
     }
 
+    public Aviso converter(){
+        return new Aviso(this.validoAte, this.destino);
+    }
+
     public Date getValidoAte() {
         return validoAte;
     }

@@ -1,22 +1,25 @@
 package br.com.proposta.PropostaOrange.bloqueio;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-public class BloqueioDTOResponse {
+@Entity
+public class Bloqueio {
+    @Id
     private String id;
     private LocalDateTime bloqueadosEm;
     private String sistemaResponsavel;
     private boolean ativo;
 
-    public BloqueioDTOResponse(String id, LocalDateTime bloqueadosEm, String sistemaResponsavel, boolean ativo) {
+    public Bloqueio() {
+    }
+
+    public Bloqueio(String id, LocalDateTime bloqueadosEm, String sistemaResponsavel, boolean ativo) {
         this.id = id;
         this.bloqueadosEm = bloqueadosEm;
         this.sistemaResponsavel = sistemaResponsavel;
         this.ativo = ativo;
-    }
-
-    public Bloqueio converter(){
-        return  new Bloqueio(this.id, this.bloqueadosEm, this.sistemaResponsavel, this.ativo);
     }
 
     public String getId() {

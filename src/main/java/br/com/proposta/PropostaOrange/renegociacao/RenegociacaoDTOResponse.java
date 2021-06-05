@@ -4,19 +4,23 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class RenegociacaoDTOResponse {
-    private Long id;
+    private String id;
     private Long quantidade;
     private BigDecimal valor;
     private LocalDateTime dataDeCriacao;
 
-    public RenegociacaoDTOResponse(Long id, Long quantidade, BigDecimal valor, LocalDateTime dataDeCriacao) {
+    public RenegociacaoDTOResponse(String id, Long quantidade, BigDecimal valor, LocalDateTime dataDeCriacao) {
         this.id = id;
         this.quantidade = quantidade;
         this.valor = valor;
         this.dataDeCriacao = dataDeCriacao;
     }
 
-    public Long getId() {
+    public Renegociacao converter(){
+        return new Renegociacao(this.id, this.quantidade, this.valor, this.dataDeCriacao);
+    }
+
+    public String getId() {
         return id;
     }
 

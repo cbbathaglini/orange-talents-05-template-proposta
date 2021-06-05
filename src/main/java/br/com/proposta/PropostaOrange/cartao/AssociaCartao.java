@@ -2,6 +2,8 @@ package br.com.proposta.PropostaOrange.cartao;
 
 import br.com.proposta.PropostaOrange.proposta.Proposta;
 import br.com.proposta.PropostaOrange.proposta.PropostaRepository;
+import br.com.proposta.PropostaOrange.vencimento.Vencimento;
+import br.com.proposta.PropostaOrange.vencimento.VencimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,6 +23,9 @@ public class AssociaCartao{
         this.consultaNovoCartao = consultaNovoCartao;
         this.cartaoRepository =cartaoRepository;
     }
+
+    @Autowired
+    private VencimentoRepository vencimentoRepository;
 
 
     @Scheduled(cron = "5/10 * * * * * ")

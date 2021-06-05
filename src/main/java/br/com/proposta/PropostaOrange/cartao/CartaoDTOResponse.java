@@ -1,16 +1,24 @@
 package br.com.proposta.PropostaOrange.cartao;
 
+import br.com.proposta.PropostaOrange.aviso.Aviso;
 import br.com.proposta.PropostaOrange.aviso.AvisoDTOResponse;
+import br.com.proposta.PropostaOrange.bloqueio.Bloqueio;
 import br.com.proposta.PropostaOrange.bloqueio.BloqueioDTOResponse;
+import br.com.proposta.PropostaOrange.carteira.Carteira;
 import br.com.proposta.PropostaOrange.carteira.CarteiraDTOResponse;
+import br.com.proposta.PropostaOrange.parcela.Parcela;
 import br.com.proposta.PropostaOrange.parcela.ParcelaDTOResponse;
 import br.com.proposta.PropostaOrange.proposta.PropostaRepository;
+import br.com.proposta.PropostaOrange.renegociacao.Renegociacao;
 import br.com.proposta.PropostaOrange.renegociacao.RenegociacaoDTOResponse;
+import br.com.proposta.PropostaOrange.vencimento.Vencimento;
 import br.com.proposta.PropostaOrange.vencimento.VencimentoDTOResponse;
+import br.com.proposta.PropostaOrange.vencimento.VencimentoRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CartaoDTOResponse {
     private String id;
@@ -26,8 +34,28 @@ public class CartaoDTOResponse {
     private VencimentoDTOResponse vencimento;
 
     public Cartao converter(PropostaRepository propostaRepository){
-        System.out.println("Vencimento::" + vencimento);
-        return new Cartao(this.id,this.emitidoEm,this.titular, this.limite,vencimento.converter(),propostaRepository.getOne(this.idProposta) );
+
+        List<Aviso> listaAvisos = this.avisos.stream()
+                .map(a -> a.converter())
+                .collect(Collectors.toList());
+
+        List<Bloqueio> listaBloqueios = this.bloqueios.stream()
+                .map(b -> b.converter())
+                .collect(Collectors.toList());
+
+        List<Parcela> listaParcelas = this.parcelas.stream()
+                .map(p -> p.converter())
+                .collect(Collectors.toList());
+
+        List<Carteira> listaCarteiras = this.carteiras.stream()
+                .map(c -> c.converter())
+                .collect(Collectors.toList());
+
+        return new Cartao(this.id,this.emitidoEm,this.titular, this.limite,
+                this.vencimento != null ? this.vencimento.converter() : null,
+                this.renegociacao != null ? this.renegociacao.converter() : null,
+                listaAvisos, listaBloqueios , listaParcelas, listaCarteiras,
+                propostaRepository.getOne(this.idProposta) );
     }
 
     public CartaoDTOResponse(String id, Long idProposta, LocalDateTime emitidoEm, String titular, int limite, List<BloqueioDTOResponse> bloqueios, List<AvisoDTOResponse> avisos, List<CarteiraDTOResponse> carteiras, List<ParcelaDTOResponse> parcelas, RenegociacaoDTOResponse renegociacao, VencimentoDTOResponse vencimento) {
