@@ -6,18 +6,21 @@ import br.com.proposta.PropostaOrange.validateErrors.ErroAPI;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/propostas")
@@ -54,6 +57,18 @@ public class PropostaController {
         return ResponseEntity.created(uri).body(new PropostaDTOResponse(proposta));
     }
 
+
+    @GetMapping(value = "/{id}")
+    @Cacheable(value = "listaDePropostas")
+    public ResponseEntity consultar(@PathVariable("id") Long idProposta){
+
+        Optional<Proposta> proposta = propostaRepository.findById(idProposta);
+        if(!proposta.isPresent()){
+            return ResponseEntity.status(404).body(new ErroAPI("Proposta","A proposta não foi encontrada."));
+        }
+
+        return ResponseEntity.status(200).body(new PropostaDTOResponse(proposta.get()));
+    }
 
 
 }

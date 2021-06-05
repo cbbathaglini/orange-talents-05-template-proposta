@@ -11,6 +11,7 @@ public class PropostaDTOResponse {
     private Long id;
     private String email;
     private String nome;
+    private StatusProposta statusProposta;
 
     public PropostaDTOResponse() {
     }
@@ -19,6 +20,11 @@ public class PropostaDTOResponse {
         this.id = proposta.getId();
         this.email = proposta.getEmail();
         this.nome = proposta.getNome();
+        this.statusProposta = proposta.getStatusProposta();
+    }
+
+    public StatusProposta getStatusProposta() {
+        return statusProposta;
     }
 
     public Long getId() {
