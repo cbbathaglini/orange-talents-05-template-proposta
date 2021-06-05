@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
 public class Vencimento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private int dia;
 
@@ -20,7 +19,8 @@ public class Vencimento {
     public Vencimento() {
     }
 
-    public Vencimento(int dia, LocalDateTime dataDeCriacao) {
+    public Vencimento(String id, int dia, LocalDateTime dataDeCriacao) {
+        this.id = id;
         this.dia = dia;
         this.dataDeCriacao = dataDeCriacao;
     }

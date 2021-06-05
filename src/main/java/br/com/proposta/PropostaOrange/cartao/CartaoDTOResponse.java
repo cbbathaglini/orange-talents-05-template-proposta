@@ -26,6 +26,7 @@ public class CartaoDTOResponse {
     private VencimentoDTOResponse vencimento;
 
     public Cartao converter(PropostaRepository propostaRepository){
+        System.out.println("Vencimento::" + vencimento);
         return new Cartao(this.id,this.emitidoEm,this.titular, this.limite,vencimento.converter(),propostaRepository.getOne(this.idProposta) );
     }
 
@@ -85,5 +86,22 @@ public class CartaoDTOResponse {
 
     public VencimentoDTOResponse getVencimento() {
         return vencimento;
+    }
+
+    @Override
+    public String toString() {
+        return "CartaoDTOResponse{" +
+                "id='" + id + '\'' +
+                ", idProposta=" + idProposta +
+                ", emitidoEm=" + emitidoEm +
+                ", titular='" + titular + '\'' +
+                ", limite=" + limite +
+                ", bloqueios=" + bloqueios +
+                ", avisos=" + avisos +
+                ", carteiras=" + carteiras +
+                ", parcelas=" + parcelas +
+                ", renegociacao=" + renegociacao +
+                ", vencimento=" + vencimento +
+                '}';
     }
 }

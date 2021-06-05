@@ -5,21 +5,21 @@ import com.fasterxml.jackson.databind.node.ValueNode;
 import java.time.LocalDateTime;
 
 public class VencimentoDTOResponse {
-    private Long id;
+    private String id;
     private int dia;
     private LocalDateTime dataDeCriacao;
 
-    public VencimentoDTOResponse(Long id, int dia, LocalDateTime dataDeCriacao) {
+    public VencimentoDTOResponse(String id, int dia, LocalDateTime dataDeCriacao) {
         this.id = id;
         this.dia = dia;
         this.dataDeCriacao = dataDeCriacao;
     }
 
     public Vencimento converter(){
-        return  new Vencimento(this.dia,this.dataDeCriacao);
+        return  new Vencimento(this.id,this.dia,this.dataDeCriacao);
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -29,5 +29,14 @@ public class VencimentoDTOResponse {
 
     public LocalDateTime getDataDeCriacao() {
         return dataDeCriacao;
+    }
+
+    @Override
+    public String toString() {
+        return "VencimentoDTOResponse{" +
+                "id='" + id + '\'' +
+                ", dia=" + dia +
+                ", dataDeCriacao=" + dataDeCriacao +
+                '}';
     }
 }

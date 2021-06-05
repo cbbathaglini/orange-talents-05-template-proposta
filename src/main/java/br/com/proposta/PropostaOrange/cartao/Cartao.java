@@ -1,6 +1,7 @@
 package br.com.proposta.PropostaOrange.cartao;
 
 import br.com.proposta.PropostaOrange.proposta.Proposta;
+import br.com.proposta.PropostaOrange.renegociacao.Renegociacao;
 import br.com.proposta.PropostaOrange.vencimento.Vencimento;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -16,8 +17,11 @@ public class Cartao {
     private String titular;
     private int limite;
 
-    @OneToOne @JoinColumn(name = "vencimento_id")
+    @ManyToOne
     private Vencimento vencimento;
+
+    @ManyToOne
+    private Renegociacao renegociacao;
 
     @OneToOne @JoinColumn(name = "proposta_id")
     private Proposta proposta;
