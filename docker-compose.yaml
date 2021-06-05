@@ -18,7 +18,7 @@ services:
       context: .
     image: propostaimg
     ports:
-      - 8084:9000
+      - 8085:8080
     networks:
       - proposta-mariadb
     environment:
