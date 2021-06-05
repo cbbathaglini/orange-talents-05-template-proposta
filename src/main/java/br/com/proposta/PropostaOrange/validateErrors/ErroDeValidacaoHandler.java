@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,15 +49,11 @@ public class ErroDeValidacaoHandler {
 	}
 
 
-	/*
-	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler( FeignException.class)
-	public ErroAPI handle(FeignException exception) {
-		//FeignErrorDecoder feignErrorDecoder = new FeignErrorDecoder();
-		//feignErrorDecoder.decode(exception.get)
-		return  new ErroAPI("Erro", exception.getMessage());
+	@ExceptionHandler(FeignException.class)
+	public String handleFeignStatusException(FeignException e, HttpServletResponse response) {
+		response.setStatus(e.status());
+		return "feignError";
 	}
-	 */
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler( HttpMessageNotReadableException.class)

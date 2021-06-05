@@ -1,6 +1,12 @@
 package br.com.proposta.PropostaOrange.proposta;
 
 
+import br.com.proposta.PropostaOrange.cartao.Cartao;
+import br.com.proposta.PropostaOrange.cartao.CartaoDTORequest;
+import br.com.proposta.PropostaOrange.cartao.CartaoDTOResponse;
+import br.com.proposta.PropostaOrange.cartao.ConsultaNovoCartao;
+import org.springframework.scheduling.annotation.Scheduled;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -19,6 +25,9 @@ public class Proposta {
     @Enumerated(EnumType.STRING)
     private StatusProposta statusProposta;
 
+    @OneToOne(mappedBy = "proposta", fetch = FetchType.EAGER)
+    private Cartao cartao;
+
     public Proposta() {
     }
 
@@ -33,6 +42,8 @@ public class Proposta {
     public void setStatusProposta(StatusResultado statusResultado){
         this.statusProposta = statusResultado.retornaStatus();
     }
+
+
 
     public StatusProposta getStatusProposta() {
         return statusProposta;

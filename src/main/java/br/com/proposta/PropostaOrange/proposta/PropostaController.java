@@ -1,11 +1,14 @@
 package br.com.proposta.PropostaOrange.proposta;
 
 
+import br.com.proposta.PropostaOrange.cartao.*;
 import br.com.proposta.PropostaOrange.validateErrors.ErroAPI;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,10 @@ public class PropostaController {
 
     @Autowired
     private ConsultaDadosFinanceiros consultaDadosInterface;
+    @Autowired
+    private CartaoRepository cartaoRepository;
+    @Autowired
+    private ConsultaNovoCartao consultaNovoCartao;
 
     @PostMapping
     @Transactional
@@ -41,8 +48,12 @@ public class PropostaController {
         ConsultaDadosDTOResponse consultaDadosDTOResponse = consultaDadosInterface.consultarDados(new ConsultaDadosDTORequest(proposta));
         proposta.setStatusProposta(consultaDadosDTOResponse.getStatusResultado());
 
+        //new AssociaCartao(propostaRepository,consultaNovoCartao,cartaoRepository).associar();
 
         URI uri = uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
         return ResponseEntity.created(uri).body(new PropostaDTOResponse(proposta));
     }
+
+
+
 }

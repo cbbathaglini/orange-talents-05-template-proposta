@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.lang.annotation.Native;
+import java.util.List;
 import java.util.Optional;
 
 public interface PropostaRepository extends JpaRepository<Proposta, Long> {
@@ -15,4 +16,8 @@ public interface PropostaRepository extends JpaRepository<Proposta, Long> {
 
     @Query("SELECT count(p.id) FROM Proposta as p where p.documento = :documento")
     Integer findPropostaDocumento(String documento);
+
+    @Query("SELECT p FROM Proposta p where  p.id not in " +
+            " (select c.proposta.id from Cartao c )  and p.statusProposta = 'ELEGIVEL' ")
+    List<Proposta> findCartaoNull();
 }
