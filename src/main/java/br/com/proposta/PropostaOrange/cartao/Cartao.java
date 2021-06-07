@@ -1,11 +1,13 @@
 package br.com.proposta.PropostaOrange.cartao;
 
 import br.com.proposta.PropostaOrange.aviso.Aviso;
+import br.com.proposta.PropostaOrange.biometria.Biometria;
 import br.com.proposta.PropostaOrange.bloqueio.Bloqueio;
 import br.com.proposta.PropostaOrange.carteira.Carteira;
 import br.com.proposta.PropostaOrange.parcela.Parcela;
 import br.com.proposta.PropostaOrange.proposta.Proposta;
 import br.com.proposta.PropostaOrange.renegociacao.Renegociacao;
+import br.com.proposta.PropostaOrange.upload.UploadImages;
 import br.com.proposta.PropostaOrange.vencimento.Vencimento;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -40,6 +42,9 @@ public class Cartao {
 
     @OneToMany
     private List<Carteira> carteirasList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<Biometria> biometriasList = new ArrayList<>();
 
     @OneToOne @JoinColumn(name = "proposta_id")
     private Proposta proposta;
@@ -87,5 +92,19 @@ public class Cartao {
 
     public Renegociacao getRenegociacao() {
         return renegociacao;
+    }
+
+    public void setBiometria(List<Biometria> biometriasList) {
+        this.biometriasList = biometriasList;
+    }
+
+
+    public boolean validaImgs(UploadImages uploaderImage) {
+        for (Biometria biometria:this.biometriasList) {
+            if(!uploaderImage.validarBase64(biometria.getBiometriaBase64())){
+                return false;
+            }
+        }
+        return  true;
     }
 }
