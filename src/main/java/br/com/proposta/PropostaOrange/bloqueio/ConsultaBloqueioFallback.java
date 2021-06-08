@@ -11,6 +11,6 @@ public class ConsultaBloqueioFallback implements ConsultaBloqueio {
 
     @Override
     public BloqueioStatusDTOResponse consultarBloqueio(String idCartao, BloqueioDTORequest request) {
-        return new BloqueioStatusDTOResponse(StatusCartao.FALHA);
+        return new BloqueioStatusDTOResponse(StatusCartao.LIBERADO);
     }
 }

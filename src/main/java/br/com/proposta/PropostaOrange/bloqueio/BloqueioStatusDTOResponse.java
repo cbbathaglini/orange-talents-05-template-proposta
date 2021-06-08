@@ -3,13 +3,20 @@ package br.com.proposta.PropostaOrange.bloqueio;
 import br.com.proposta.PropostaOrange.cartao.StatusCartao;
 
 public class BloqueioStatusDTOResponse {
-    private StatusCartao statusBloqueio;
+    private StatusCartao resultado;
 
-    public BloqueioStatusDTOResponse(StatusCartao statusBloqueio) {
-        this.statusBloqueio = statusBloqueio;
+    public BloqueioStatusDTOResponse() {
+    }
+
+    public BloqueioStatusDTOResponse(StatusCartao resultado) {
+        this.resultado = resultado;
     }
 
     public StatusCartao getStatusBloqueio() {
-        return statusBloqueio;
+        return resultado;
+    }
+
+    public void setResultado(StatusCartao resultado) {
+        this.resultado = resultado;
     }
 }

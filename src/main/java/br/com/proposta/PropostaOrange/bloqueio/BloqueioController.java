@@ -45,10 +45,15 @@ public class BloqueioController {
             return ResponseEntity.status(422).body(new ErroAPI("Cartão","O cartão já tinha sido bloqueado."));
         }
 
-        cartaoEncontrado.setStatusCartao(StatusCartao.BLOQUEADO);
-        Bloqueio bloqueio = bloqueioDTORequest.converter(cartaoEncontrado, request.getHeader("User-Agent"), IPAddress.getClientIp(request));
-        bloqueioRepository.save(bloqueio);
-        return ResponseEntity.status(200).build();
+        BloqueioStatusDTOResponse bloqueioStatusDTOResponse = consultaBloqueio.consultarBloqueio(numCartao,bloqueioDTORequest);
 
+        if(bloqueioStatusDTOResponse.getStatusBloqueio().equals(StatusCartao.BLOQUEADO)) {
+            cartaoEncontrado.setStatusCartao(bloqueioStatusDTOResponse.getStatusBloqueio());
+            Bloqueio bloqueio = bloqueioDTORequest.converter(cartaoEncontrado, request.getHeader("User-Agent"), IPAddress.getClientIp(request));
+            bloqueioRepository.save(bloqueio);
+            return ResponseEntity.status(200).build();
+        }
+
+        return ResponseEntity.status(422).body(new ErroAPI("Cartão","Falha ao bloquear o cartão"));
     }
 }

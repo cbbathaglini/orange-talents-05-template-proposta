@@ -52,7 +52,7 @@ public class ErroDeValidacaoHandler {
 	@ExceptionHandler(FeignException.class)
 	public String handleFeignStatusException(FeignException e, HttpServletResponse response) {
 		response.setStatus(e.status());
-		return "feignError";
+		return "feignError: "+ e.getMessage();
 	}
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
