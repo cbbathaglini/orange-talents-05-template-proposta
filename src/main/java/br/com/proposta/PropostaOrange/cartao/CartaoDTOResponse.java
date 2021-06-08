@@ -1,7 +1,7 @@
 package br.com.proposta.PropostaOrange.cartao;
 
-import br.com.proposta.PropostaOrange.aviso.Aviso;
-import br.com.proposta.PropostaOrange.aviso.AvisoDTOResponse;
+import br.com.proposta.PropostaOrange.avisoviagem.AvisoViagem;
+import br.com.proposta.PropostaOrange.avisoviagem.AvisoViagemDTOResponse;
 import br.com.proposta.PropostaOrange.bloqueio.Bloqueio;
 import br.com.proposta.PropostaOrange.bloqueio.BloqueioDTOResponse;
 import br.com.proposta.PropostaOrange.carteira.Carteira;
@@ -9,11 +9,8 @@ import br.com.proposta.PropostaOrange.carteira.CarteiraDTOResponse;
 import br.com.proposta.PropostaOrange.parcela.Parcela;
 import br.com.proposta.PropostaOrange.parcela.ParcelaDTOResponse;
 import br.com.proposta.PropostaOrange.proposta.PropostaRepository;
-import br.com.proposta.PropostaOrange.renegociacao.Renegociacao;
 import br.com.proposta.PropostaOrange.renegociacao.RenegociacaoDTOResponse;
-import br.com.proposta.PropostaOrange.vencimento.Vencimento;
 import br.com.proposta.PropostaOrange.vencimento.VencimentoDTOResponse;
-import br.com.proposta.PropostaOrange.vencimento.VencimentoRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ public class CartaoDTOResponse {
     private String titular;
     private int limite;
     private List<BloqueioDTOResponse> bloqueios = new ArrayList<>();
-    private List<AvisoDTOResponse> avisos = new ArrayList<>();
+    private List<AvisoViagemDTOResponse> avisos = new ArrayList<>();
     private List<CarteiraDTOResponse> carteiras = new ArrayList<>();
     private List<ParcelaDTOResponse> parcelas = new ArrayList<>();
     private RenegociacaoDTOResponse renegociacao;
@@ -35,7 +32,7 @@ public class CartaoDTOResponse {
 
     public Cartao converter(PropostaRepository propostaRepository){
 
-        List<Aviso> listaAvisos = this.avisos.stream()
+        List<AvisoViagem> listaAvisoViagems = this.avisos.stream()
                 .map(a -> a.converter())
                 .collect(Collectors.toList());
 
@@ -54,11 +51,11 @@ public class CartaoDTOResponse {
         return new Cartao(this.id,this.emitidoEm,this.titular, this.limite,
                 this.vencimento != null ? this.vencimento.converter() : null,
                 this.renegociacao != null ? this.renegociacao.converter() : null,
-                listaAvisos, listaBloqueios , listaParcelas, listaCarteiras,
+                listaAvisoViagems, listaBloqueios , listaParcelas, listaCarteiras,
                 propostaRepository.getOne(this.idProposta) );
     }
 
-    public CartaoDTOResponse(String id, Long idProposta, LocalDateTime emitidoEm, String titular, int limite, List<BloqueioDTOResponse> bloqueios, List<AvisoDTOResponse> avisos, List<CarteiraDTOResponse> carteiras, List<ParcelaDTOResponse> parcelas, RenegociacaoDTOResponse renegociacao, VencimentoDTOResponse vencimento) {
+    public CartaoDTOResponse(String id, Long idProposta, LocalDateTime emitidoEm, String titular, int limite, List<BloqueioDTOResponse> bloqueios, List<AvisoViagemDTOResponse> avisos, List<CarteiraDTOResponse> carteiras, List<ParcelaDTOResponse> parcelas, RenegociacaoDTOResponse renegociacao, VencimentoDTOResponse vencimento) {
         this.id = id;
         this.idProposta = idProposta;
         this.emitidoEm = emitidoEm;
@@ -96,7 +93,7 @@ public class CartaoDTOResponse {
         return bloqueios;
     }
 
-    public List<AvisoDTOResponse> getAvisos() {
+    public List<AvisoViagemDTOResponse> getAvisos() {
         return avisos;
     }
 
