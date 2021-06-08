@@ -21,7 +21,9 @@ public class AvisoViagem {
     private LocalDateTime avisadoEm;
     private String ipcliente;
     private String useragent;
-    //private StatusAviso statusAviso;
+
+    @Enumerated(EnumType.STRING)
+    private StatusAviso statusAviso;
 
     @ManyToOne
     private Cartao cartao;
@@ -53,5 +55,9 @@ public class AvisoViagem {
 
     public String getDestino() {
         return destino;
+    }
+
+    public void setStatusAviso(StatusAviso statusAviso) {
+        this.statusAviso = statusAviso;
     }
 }

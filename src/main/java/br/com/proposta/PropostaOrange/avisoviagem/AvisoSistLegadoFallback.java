@@ -1,8 +1,12 @@
 package br.com.proposta.PropostaOrange.avisoviagem;
 
-public class AvisoSistLegadoFallback implements AvisoSistLegado{
+import org.springframework.stereotype.Component;
+
+@Component
+public class AvisoSistLegadoFallback implements AvisoConsultaSistemaLegado{
+
     @Override
-    public AvisoStatusDTOResponse postAviso(String idCartao, AvisoViagemDTORequest avisoViagemDTORequest) {
+    public AvisoStatusDTOResponse postAvisos(String idCartao, AvisoViagemDTORequest request) {
         return  new AvisoStatusDTOResponse(StatusAviso.FALHA);
     }
 }

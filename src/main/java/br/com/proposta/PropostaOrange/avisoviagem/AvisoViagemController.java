@@ -1,11 +1,7 @@
-package br.com.proposta.PropostaOrange.bloqueio;
+package br.com.proposta.PropostaOrange.avisoviagem;
 
-import br.com.proposta.PropostaOrange.avisoviagem.*;
 import br.com.proposta.PropostaOrange.cartao.Cartao;
 import br.com.proposta.PropostaOrange.cartao.CartaoRepository;
-import br.com.proposta.PropostaOrange.cartao.StatusCartao;
-import br.com.proposta.PropostaOrange.proposta.*;
-import br.com.proposta.PropostaOrange.utils.IPAddress;
 import br.com.proposta.PropostaOrange.validateErrors.ErroAPI;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -14,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +28,8 @@ public class AvisoViagemController {
     @Autowired
     private AvisoViagemRepository avisoViagemRepository;
 
-    //@Autowired
-    //private AvisoSistLegado avisoSistLegado;
+    @Autowired
+    private AvisoConsultaSistemaLegado avisoConsultaSistemaLegado;
 
     private final MeterRegistry meterRegistry;
     private Counter countAvisosViagemSucesso;
@@ -68,15 +63,16 @@ public class AvisoViagemController {
             return ResponseEntity.status(404).body(new ErroAPI("Cartão","O cartão não foi encontrado na base de dados."));
         }
 
-        //AvisoStatusDTOResponse avisoStatusDTOResponse = avisoSistLegado.postAviso(numCartao,avisoViagemDTORequest);
-        //if(avisoStatusDTOResponse.getResultado().equals(StatusAviso.CRIADO)) {
+        AvisoStatusDTOResponse avisoStatusDTOResponse = avisoConsultaSistemaLegado.postAvisos(numCartao,avisoViagemDTORequest);
+        if(avisoStatusDTOResponse.getResultado().equals(StatusAviso.CRIADO)) {
             AvisoViagem avisoViagem = avisoViagemDTORequest.converter(cartaoEncontrado,request);
+            avisoViagem.setStatusAviso(avisoStatusDTOResponse.getResultado());
             avisoViagemRepository.save(avisoViagem);
             this.countAvisosViagemSucesso.increment();
             return ResponseEntity.status(200).build();
-        //}
+        }
 
-        //this.countAvisosViagemFalha.increment();
-        //return ResponseEntity.status(422).body(new ErroAPI("Aviso","Falha ao realizar notificação do aviso de viagem"));
+        this.countAvisosViagemFalha.increment();
+        return ResponseEntity.status(422).body(new ErroAPI("Aviso","Falha ao realizar notificação do aviso de viagem"));
     }
 }

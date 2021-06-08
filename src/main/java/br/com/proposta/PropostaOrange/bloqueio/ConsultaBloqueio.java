@@ -1,5 +1,7 @@
 package br.com.proposta.PropostaOrange.bloqueio;
 
+import br.com.proposta.PropostaOrange.avisoviagem.AvisoStatusDTOResponse;
+import br.com.proposta.PropostaOrange.avisoviagem.AvisoViagemDTORequest;
 import br.com.proposta.PropostaOrange.cartao.CartaoDTORequest;
 import br.com.proposta.PropostaOrange.cartao.CartaoDTOResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,4 +17,5 @@ import javax.validation.Valid;
 public interface ConsultaBloqueio{
     @RequestMapping(value="/api/cartoes/{id}/bloqueios", method= RequestMethod.POST, consumes = "application/json")
     BloqueioStatusDTOResponse consultarBloqueio(@PathVariable("id") String idCartao, @RequestBody @Valid BloqueioDTORequest request);
+
 }
