@@ -9,4 +9,7 @@ import java.util.Optional;
 public interface CartaoRepository extends JpaRepository<Cartao, Long> {
     @Query("SELECT c FROM Cartao c WHERE c.id = :numCartao ")
     Cartao findByNumCartao(String numCartao);
+
+    @Query("SELECT c FROM Cartao c WHERE c.id = :id and c.statusCartao = :status ")
+    Optional<Cartao> cartaoBloqueado(String id, StatusCartao status);
 }

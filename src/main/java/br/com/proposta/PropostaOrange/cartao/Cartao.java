@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Cartao {
@@ -24,6 +25,9 @@ public class Cartao {
     private LocalDateTime emitidoEm;
     private String titular;
     private int limite;
+
+    @Enumerated(EnumType.STRING)
+    private StatusCartao statusCartao;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Vencimento vencimento;
@@ -106,5 +110,21 @@ public class Cartao {
             }
         }
         return  true;
+    }
+
+    public StatusCartao getStatusCartao() {
+        return statusCartao;
+    }
+
+    public void setStatusCartao(StatusCartao statusCartao) {
+        this.statusCartao = statusCartao;
+    }
+
+    public boolean jaBloqueado(CartaoRepository cartaoRepository) {
+        Optional<Cartao> cartaoOptional = cartaoRepository.cartaoBloqueado(this.id, StatusCartao.BLOQUEADO);
+         if(cartaoOptional.isPresent()){
+             return true;
+         }
+         return false;
     }
 }
