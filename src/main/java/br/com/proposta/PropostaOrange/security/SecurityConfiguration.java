@@ -16,8 +16,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().httpStrictTransportSecurity().disable();
         http.authorizeRequests(request->
-                request.antMatchers("/**")
-                        .hasAuthority("SCOPE_propostas")
+                request.antMatchers("/api/**").hasAuthority("SCOPE_propostas")
+                        .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+
         ).
                 oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

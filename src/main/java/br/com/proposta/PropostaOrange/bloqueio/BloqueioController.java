@@ -55,7 +55,7 @@ public class BloqueioController {
 
 
 
-    @PostMapping(value = "/cartoes/{id}/bloqueios")
+    @PostMapping(value = "/api/cartoes/{id}/bloqueios")
     @Transactional
     @CacheEvict(value = "listaDeBloqueios", allEntries = true)
     public ResponseEntity cadastrar(@PathVariable("id") String numCartao,

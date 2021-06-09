@@ -14,10 +14,7 @@ import io.micrometer.core.instrument.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
@@ -60,7 +57,7 @@ public class CarteiraController {
 
 
 
-    @PostMapping(value = "/cartoes/{id}/carteiras")
+    @PostMapping(value = "/api/cartoes/{id}/carteiras")
     @Transactional
     @CacheEvict(value = "listaDeCarteiras", allEntries = true)
     public ResponseEntity cadastrar(@PathVariable("id") String numCartao,
@@ -83,7 +80,7 @@ public class CarteiraController {
             Carteira carteira = carteiraDTORequest.converter(cartaoEncontrado,carteiraResultadoDTOResponse);
             carteiraRepository.save(carteira);
             this.countCarteiraSucesso.increment();
-            URI uri = uriBuilder.path("/cartoes/{idCartao}/carteiras/{idCarteira}").buildAndExpand(cartaoEncontrado.getId(),carteira.getId()).toUri();
+            URI uri = uriBuilder.path("/api/cartoes/{idCartao}/carteiras/{idCarteira}").buildAndExpand(cartaoEncontrado.getId(),carteira.getId()).toUri();
             return ResponseEntity.status(201).body(uri);
         }
 

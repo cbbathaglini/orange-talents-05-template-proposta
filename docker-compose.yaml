@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   mariadb:
     image: mariadb:10.2
@@ -137,8 +136,8 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-volume:/etc/prometheus/
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     network_mode: bridge
     ports:
       - "9090:9090"

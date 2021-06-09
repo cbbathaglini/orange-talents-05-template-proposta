@@ -29,7 +29,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/propostas")
+@RequestMapping("/api/propostas")
 public class PropostaController {
 
     @Autowired

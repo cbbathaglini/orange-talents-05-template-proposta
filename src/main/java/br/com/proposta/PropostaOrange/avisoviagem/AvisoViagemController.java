@@ -49,7 +49,7 @@ public class AvisoViagemController {
 
 
 
-    @PostMapping(value = "/cartoes/{id}/avisos")
+    @PostMapping(value = "/api/cartoes/{id}/avisos")
     @Transactional
     @CacheEvict(value = "listaDeAvisosViagens", allEntries = true)
     public ResponseEntity cadastrar(@PathVariable("id") String numCartao,
