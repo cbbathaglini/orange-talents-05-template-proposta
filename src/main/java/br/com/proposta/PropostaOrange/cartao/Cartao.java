@@ -125,4 +125,12 @@ public class Cartao {
          }
          return false;
     }
+
+    public boolean jaAssociado(CartaoRepository cartaoRepository) {
+        Optional<Cartao> cartaoOptional = cartaoRepository.cartaoComCarteira(this.id);
+        if(cartaoOptional.isPresent()){
+            return true;
+        }
+        return false;
+    }
 }

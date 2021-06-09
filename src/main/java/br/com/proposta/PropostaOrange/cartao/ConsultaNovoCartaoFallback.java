@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class ConsultaNovoCartaoFallback implements ConsultaNovoCartao{
 
-
     @Override
     public CartaoDTOResponse consultarCartao(CartaoDTORequest request) {
 

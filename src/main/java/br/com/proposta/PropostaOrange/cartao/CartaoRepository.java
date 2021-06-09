@@ -12,4 +12,7 @@ public interface CartaoRepository extends JpaRepository<Cartao, Long> {
 
     @Query("SELECT c FROM Cartao c WHERE c.id = :id and c.statusCartao = :status ")
     Optional<Cartao> cartaoBloqueado(String id, StatusCartao status);
+
+    @Query("SELECT c FROM Cartao c,Carteira t WHERE c.id = t.cartao.id and c.id = :id")
+    Optional<Cartao> cartaoComCarteira(String id);
 }

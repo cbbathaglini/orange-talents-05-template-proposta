@@ -1,28 +1,49 @@
 package br.com.proposta.PropostaOrange.carteira;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import br.com.proposta.PropostaOrange.cartao.Cartao;
+import br.com.proposta.PropostaOrange.proposta.StatusProposta;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class Carteira {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String email;
     private LocalDateTime associadaEm;
     private String emissor;
+    private String idSistLegado;
+    private String carteira;
+
+    @Enumerated(EnumType.STRING)
+    private StatusCarteira statusCarteira;
+
+    @ManyToOne
+    private Cartao cartao;
+
+    public Carteira(String email, LocalDateTime associadaEm, Cartao cartao,String carteira,StatusCarteira statusCarteira,String idSistLegado) {
+        this.email = email;
+        this.associadaEm = associadaEm;
+        this.cartao = cartao;
+        this.carteira = carteira;
+        this.statusCarteira = statusCarteira;
+        this.idSistLegado = idSistLegado;
+    }
 
     public Carteira() {
     }
 
-    public Carteira(String id, String email, LocalDateTime associadaEm, String emissor) {
+    public Carteira(Long id, String email, LocalDateTime associadaEm, String emissor) {
         this.id = id;
         this.email = email;
         this.associadaEm = associadaEm;
         this.emissor = emissor;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -36,5 +57,13 @@ public class Carteira {
 
     public String getEmissor() {
         return emissor;
+    }
+
+    public void setStatusCarteira(StatusCarteira statusCarteira) {
+        this.statusCarteira = statusCarteira;
+    }
+
+    public void setIdSistLegado(String idSistLegado) {
+        this.idSistLegado = idSistLegado;
     }
 }
