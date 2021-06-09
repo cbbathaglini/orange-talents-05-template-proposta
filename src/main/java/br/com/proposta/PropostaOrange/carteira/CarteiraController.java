@@ -82,6 +82,7 @@ public class CarteiraController {
         if(carteiraResultadoDTOResponse.getResultado().equals(StatusCarteira.ASSOCIADA)) {
             Carteira carteira = carteiraDTORequest.converter(cartaoEncontrado,carteiraResultadoDTOResponse);
             carteiraRepository.save(carteira);
+            this.countCarteiraSucesso.increment();
             URI uri = uriBuilder.path("/cartoes/{idCartao}/carteiras/{idCarteira}").buildAndExpand(cartaoEncontrado.getId(),carteira.getId()).toUri();
             return ResponseEntity.status(201).body(uri);
         }

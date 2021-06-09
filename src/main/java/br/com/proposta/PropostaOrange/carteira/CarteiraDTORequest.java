@@ -14,12 +14,12 @@ public class CarteiraDTORequest {
     @NotEmpty
     private String email;
 
-    private String carteira;
+    private CarteiraEnum carteira;
 
     public CarteiraDTORequest() {
     }
 
-    public CarteiraDTORequest(String email, String carteira) {
+    public CarteiraDTORequest(String email, CarteiraEnum carteira) {
         this.email = email;
         this.carteira = carteira;
     }
@@ -32,11 +32,11 @@ public class CarteiraDTORequest {
         this.email = email;
     }
 
-    public String getCarteira() {
+    public CarteiraEnum getCarteira() {
         return carteira;
     }
 
-    public void setCarteira(String carteira) {
+    public void setCarteira(CarteiraEnum carteira) {
         this.carteira = carteira;
     }
 

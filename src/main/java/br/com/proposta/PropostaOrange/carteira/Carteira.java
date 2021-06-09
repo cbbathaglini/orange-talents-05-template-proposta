@@ -16,7 +16,9 @@ public class Carteira {
     private LocalDateTime associadaEm;
     private String emissor;
     private String idSistLegado;
-    private String carteira;
+
+    @Enumerated(EnumType.STRING)
+    private CarteiraEnum carteira;
 
     @Enumerated(EnumType.STRING)
     private StatusCarteira statusCarteira;
@@ -24,7 +26,7 @@ public class Carteira {
     @ManyToOne
     private Cartao cartao;
 
-    public Carteira(String email, LocalDateTime associadaEm, Cartao cartao,String carteira,StatusCarteira statusCarteira,String idSistLegado) {
+    public Carteira(String email, LocalDateTime associadaEm, Cartao cartao,CarteiraEnum carteira,StatusCarteira statusCarteira,String idSistLegado) {
         this.email = email;
         this.associadaEm = associadaEm;
         this.cartao = cartao;
