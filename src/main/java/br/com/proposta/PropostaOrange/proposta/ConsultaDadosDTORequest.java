@@ -6,6 +6,8 @@ import br.com.proposta.PropostaOrange.proposta.StatusResultado;
 public class ConsultaDadosDTORequest {
 
     private Long idProposta;
+
+
     private String documento;
     private String nome;
 

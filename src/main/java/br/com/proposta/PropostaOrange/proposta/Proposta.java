@@ -5,6 +5,7 @@ import br.com.proposta.PropostaOrange.cartao.Cartao;
 import br.com.proposta.PropostaOrange.cartao.CartaoDTORequest;
 import br.com.proposta.PropostaOrange.cartao.CartaoDTOResponse;
 import br.com.proposta.PropostaOrange.cartao.ConsultaNovoCartao;
+import br.com.proposta.PropostaOrange.ofuscador.Ofuscador;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.*;
@@ -17,7 +18,9 @@ public class Proposta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Convert(converter = Ofuscador.class)
     private String documento;
+
     private String email;
     private String nome;
     private String endereco;

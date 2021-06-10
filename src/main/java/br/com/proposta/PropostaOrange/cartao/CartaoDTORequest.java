@@ -1,11 +1,17 @@
 package br.com.proposta.PropostaOrange.cartao;
 
+import br.com.proposta.PropostaOrange.ofuscador.Ofuscador;
 import br.com.proposta.PropostaOrange.proposta.Proposta;
+
+import javax.persistence.Convert;
 
 public class CartaoDTORequest {
 
     private Long idProposta;
+
+    @Convert(converter = Ofuscador.class)
     private String documento;
+    
     private String nome;
 
     public CartaoDTORequest(Proposta proposta) {
