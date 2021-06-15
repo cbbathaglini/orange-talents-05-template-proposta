@@ -22,6 +22,7 @@ public class Ofuscador implements AttributeConverter<String, String> {
             throw new RuntimeException(exception);
         }
     }
+
     @SuppressWarnings("deprecation")
     @Override
     public String convertToEntityAttribute(String valor) {

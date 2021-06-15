@@ -10,5 +10,4 @@ public interface ConsultaDadosFinanceiros {
 
     @RequestMapping(value="${consulta.dados.financeiros}", method= RequestMethod.GET, consumes = "application/json")
     ConsultaDadosDTOResponse consultarDados(ConsultaDadosDTORequest request);
-
 }

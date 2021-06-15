@@ -6,10 +6,12 @@ import br.com.proposta.PropostaOrange.cartao.CartaoDTORequest;
 import br.com.proposta.PropostaOrange.cartao.CartaoDTOResponse;
 import br.com.proposta.PropostaOrange.cartao.ConsultaNovoCartao;
 import br.com.proposta.PropostaOrange.ofuscador.Ofuscador;
+import com.google.common.hash.Hashing;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 
 @Entity
 public class Proposta {
@@ -20,6 +22,7 @@ public class Proposta {
 
     @Convert(converter = Ofuscador.class)
     private String documento;
+    private String hashDocumento;
 
     private String email;
     private String nome;
@@ -35,7 +38,9 @@ public class Proposta {
     }
 
     public Proposta(String documento, String email, String nome, String endereco, BigDecimal salario) {
+
         this.documento = documento;
+        this.hashDocumento = Hashing.sha256().hashString(documento, StandardCharsets.UTF_8).toString();
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;
@@ -72,5 +77,7 @@ public class Proposta {
         return documento;
     }
 
-
+    public String getHashDocumento() {
+        return hashDocumento;
+    }
 }

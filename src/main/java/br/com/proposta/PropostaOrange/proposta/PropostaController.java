@@ -4,6 +4,7 @@ package br.com.proposta.PropostaOrange.proposta;
 import br.com.proposta.PropostaOrange.cartao.*;
 import br.com.proposta.PropostaOrange.ofuscador.Ofuscador;
 import br.com.proposta.PropostaOrange.validateErrors.ErroAPI;
+import com.google.common.hash.Hashing;
 import feign.FeignException;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -29,6 +30,7 @@ import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -63,17 +65,13 @@ public class PropostaController {
         this.countPropostaFalha = this.meterRegistry.counter("proposta_falha", tags);
     }
 
-
-
     @PostMapping
     @Transactional
     @CacheEvict(value = "listaDePropostas", allEntries = true)
     public ResponseEntity cadastrar(@RequestBody @Valid PropostaDTORequest propostaDTORequest,  UriComponentsBuilder uriBuilder){
 
-        Ofuscador ofuscador = new Ofuscador();
-        //propostaDTORequest.getDocumento().equals(ofuscador.convertToDatabaseColumn(propostaDTORequest.getDocumento()))
 
-        if(propostaRepository.findPropostaDocumento(propostaDTORequest.getDocumento()) > 0){
+        if(propostaRepository.findPropostaDocumento( Hashing.sha256().hashString(propostaDTORequest.getDocumento(), StandardCharsets.UTF_8).toString()) > 0){
             this.countPropostaFalha.increment();
             return ResponseEntity.status(422).body(new ErroAPI("Proposta", "O solicitante já requisitou uma proposta"));
         }

@@ -15,7 +15,7 @@ public interface PropostaRepository extends JpaRepository<Proposta, Long> {
 
     Optional<Proposta> findByDocumento(String documento);
 
-    @Query("SELECT count(p.id) FROM Proposta as p where p.documento = :documento")
+    @Query("SELECT count(p.id) FROM Proposta as p where p.hashDocumento = :documento")
     Integer findPropostaDocumento(String documento);
 
     @Query("SELECT p FROM Proposta p where  p.id not in " +
