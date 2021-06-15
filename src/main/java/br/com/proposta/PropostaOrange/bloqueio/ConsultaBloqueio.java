@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 
 
-@FeignClient(url = "http://localhost:8888", name = "consultarBloqueio", fallback = ConsultaBloqueioFallback.class)
+@FeignClient(url = "${local.cartao.resource}", name = "consultarBloqueio", fallback = ConsultaBloqueioFallback.class)
 public interface ConsultaBloqueio{
-    @RequestMapping(value="/api/cartoes/{id}/bloqueios", method= RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value="${cartao.resource.bloqueio}", method= RequestMethod.POST, consumes = "application/json")
     BloqueioStatusDTOResponse consultarBloqueio(@PathVariable("id") String idCartao, @RequestBody @Valid BloqueioDTORequest request);
 
 }

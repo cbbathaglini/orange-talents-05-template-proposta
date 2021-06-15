@@ -48,6 +48,7 @@ class PropostaTest {
                 .content(json))
                 .andExpect(status().isCreated());
 
+
         int total = propostaRepository.findPropostaDocumento("26.621.139/0001-46");
         Optional<Proposta> propostaOptional = propostaRepository.findByDocumento("26.621.139/0001-46");
         //System.out.println(propostaOptional.get().toString());

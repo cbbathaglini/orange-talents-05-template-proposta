@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
-@FeignClient(url = "http://localhost:8888", name = "postAvisos", fallback = AvisoSistLegadoFallback.class)
+@FeignClient(url = "${local.cartao.resource}", name = "postAvisos", fallback = AvisoSistLegadoFallback.class)
 public interface AvisoConsultaSistemaLegado{
-    @RequestMapping(value="/api/cartoes/{id}/avisos", method= RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value="${cartao.resource.avisos}", method= RequestMethod.POST, consumes = "application/json")
     AvisoStatusDTOResponse postAvisos(@PathVariable("id") String idCartao, @RequestBody @Valid AvisoViagemDTORequest request);
 }

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
-@FeignClient(url = "http://localhost:8888", name = "carteira", fallback = CarteiraSistemaLegadoFallback.class)
+@FeignClient(url = "${local.cartao.resource}", name = "carteira", fallback = CarteiraSistemaLegadoFallback.class)
 public interface CarteiraSistemaLegado{
-    @RequestMapping(value="/api/cartoes/{id}/carteiras", method= RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value="${cartao.resource.carteira}", method= RequestMethod.POST, consumes = "application/json")
     CarteiraResultadoDTOResponse postCarteira(@PathVariable("id") String idCartao, @RequestBody @Valid CarteiraDTORequest request);
 }

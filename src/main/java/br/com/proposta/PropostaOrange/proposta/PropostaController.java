@@ -2,6 +2,7 @@ package br.com.proposta.PropostaOrange.proposta;
 
 
 import br.com.proposta.PropostaOrange.cartao.*;
+import br.com.proposta.PropostaOrange.ofuscador.Ofuscador;
 import br.com.proposta.PropostaOrange.validateErrors.ErroAPI;
 import feign.FeignException;
 import io.micrometer.core.instrument.Counter;
@@ -17,8 +18,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+//import org.springframework.security.crypto.encrypt;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -64,6 +69,9 @@ public class PropostaController {
     @Transactional
     @CacheEvict(value = "listaDePropostas", allEntries = true)
     public ResponseEntity cadastrar(@RequestBody @Valid PropostaDTORequest propostaDTORequest,  UriComponentsBuilder uriBuilder){
+
+        Ofuscador ofuscador = new Ofuscador();
+        //propostaDTORequest.getDocumento().equals(ofuscador.convertToDatabaseColumn(propostaDTORequest.getDocumento()))
 
         if(propostaRepository.findPropostaDocumento(propostaDTORequest.getDocumento()) > 0){
             this.countPropostaFalha.increment();

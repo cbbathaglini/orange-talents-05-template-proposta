@@ -75,6 +75,10 @@ public class CarteiraController {
             return ResponseEntity.status(422).body(new ErroAPI("Cartão","O cartão já foi associado a uma carteira."));
         }
 
+        if(cartaoEncontrado.jaBloqueado(cartaoRepository)){
+            return ResponseEntity.status(422).body(new ErroAPI("Cartão","O cartão está bloqueado."));
+        }
+
         CarteiraResultadoDTOResponse carteiraResultadoDTOResponse = carteiraSistemaLegado.postCarteira(numCartao,carteiraDTORequest);
         if(carteiraResultadoDTOResponse.getResultado().equals(StatusCarteira.ASSOCIADA)) {
             Carteira carteira = carteiraDTORequest.converter(cartaoEncontrado,carteiraResultadoDTOResponse);

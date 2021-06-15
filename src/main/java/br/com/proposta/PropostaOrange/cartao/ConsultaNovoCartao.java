@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-@FeignClient(url = "http://localhost:8888", name = "consultaNovoCartao",fallback = ConsultaNovoCartaoFallback.class)
+@FeignClient(url = "${local.cartao.resource}", name = "consultaNovoCartao",fallback = ConsultaNovoCartaoFallback.class)
 public interface ConsultaNovoCartao{
-    @RequestMapping(value="/api/cartoes", method= RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value="${cartao.resource.cartao}", method= RequestMethod.POST, consumes = "application/json")
     CartaoDTOResponse consultarCartao(CartaoDTORequest request);
 }
