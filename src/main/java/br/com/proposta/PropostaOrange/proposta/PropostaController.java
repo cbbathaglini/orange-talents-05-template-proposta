@@ -16,12 +16,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 //import org.springframework.security.crypto.encrypt;
@@ -88,17 +90,40 @@ public class PropostaController {
     }
 
 
+//    @GetMapping(value = "/{id}")
+//    @Cacheable(value = "listaDePropostas")
+//    public ResponseEntity<PropostaDTOResponse> consultar(@PathVariable("id") Long idProposta){
+//
+//        Optional<Proposta> proposta = propostaRepository.findById(idProposta);
+//        Optional<PropostaDTOResponse> optionalPropostaDTOResponse = proposta.map(op -> new PropostaDTOResponse(proposta.get()));
+//
+//        Optional<ResponseEntity<PropostaDTOResponse>> optionalResponseEntity = optionalPropostaDTOResponse.map( response -> ResponseEntity.ok().build());
+//
+//        //return  optionalResponseEntity.orElseGet(()->  ResponseEntity.status(404).body(new ErroAPI("Proposta","A proposta não foi encontrada.")));
+//        return  optionalResponseEntity.orElseGet(()->  ResponseEntity.status(404).build());
+//
+//    }
+
+
     @GetMapping(value = "/{id}")
     @Cacheable(value = "listaDePropostas")
-    public ResponseEntity consultar(@PathVariable("id") Long idProposta){
+    public ResponseEntity<Object> consultar(@PathVariable("id") Long idProposta){
 
         Optional<Proposta> proposta = propostaRepository.findById(idProposta);
-        if(!proposta.isPresent()){
-            return ResponseEntity.status(404).body(new ErroAPI("Proposta","A proposta não foi encontrada."));
-        }
 
-        return ResponseEntity.status(200).body(new PropostaDTOResponse(proposta.get()));
+        //consumer
+        proposta.ifPresent(op -> System.out.println(proposta));
+
+        //filter
+        //proposta.filter(op -> op.name.equals(""));
+
+        return  proposta
+                .map(op -> new PropostaDTOResponse(proposta.get()))
+                .map(reponse -> ResponseEntity.ok().build())
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
     }
+
 
 
 }

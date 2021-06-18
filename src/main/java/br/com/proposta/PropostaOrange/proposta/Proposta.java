@@ -80,4 +80,19 @@ public class Proposta {
     public String getHashDocumento() {
         return hashDocumento;
     }
+
+    @Override
+    public String toString() {
+        return "Proposta{" +
+                "id=" + id +
+                ", documento='" + documento + '\'' +
+                ", hashDocumento='" + hashDocumento + '\'' +
+                ", email='" + email + '\'' +
+                ", nome='" + nome + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", salario=" + salario +
+                ", statusProposta=" + statusProposta +
+                ", cartao=" + cartao +
+                '}';
+    }
 }
