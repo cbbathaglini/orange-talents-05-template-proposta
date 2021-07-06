@@ -1,7 +1,10 @@
 package br.com.proposta.PropostaOrange.parcela;
 
+import br.com.proposta.PropostaOrange.cartao.Cartao;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 @Entity
 public class Parcela {

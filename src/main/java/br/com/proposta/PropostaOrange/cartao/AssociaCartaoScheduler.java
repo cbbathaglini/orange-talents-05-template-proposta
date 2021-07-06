@@ -5,6 +5,10 @@ import br.com.proposta.PropostaOrange.proposta.PropostaRepository;
 import br.com.proposta.PropostaOrange.vencimento.Vencimento;
 import br.com.proposta.PropostaOrange.vencimento.VencimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,12 +17,12 @@ import java.util.List;
 
 @Component
 @EnableScheduling
-public class AssociaCartao{
+public class AssociaCartaoScheduler {
 
     private PropostaRepository propostaRepository;
     private CartaoRepository cartaoRepository;
     private ConsultaNovoCartao consultaNovoCartao;
-    public AssociaCartao(PropostaRepository propostaRepository,ConsultaNovoCartao consultaNovoCartao,CartaoRepository cartaoRepository) {
+    public AssociaCartaoScheduler(PropostaRepository propostaRepository, ConsultaNovoCartao consultaNovoCartao, CartaoRepository cartaoRepository) {
         this.propostaRepository =propostaRepository;
         this.consultaNovoCartao = consultaNovoCartao;
         this.cartaoRepository =cartaoRepository;

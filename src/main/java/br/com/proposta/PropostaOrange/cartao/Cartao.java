@@ -33,16 +33,16 @@ public class Cartao {
     @ManyToOne(cascade = CascadeType.ALL)
     private Renegociacao renegociacao;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cartao")
     private List<AvisoViagem> avisosList = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "cartao")
     private List<Bloqueio> bloqueioList = new ArrayList<>();
 
     @OneToMany
     private List<Parcela> parcelasList = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "cartao")
     private List<Carteira> carteirasList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.MERGE)
